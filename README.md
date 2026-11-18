@@ -2,7 +2,7 @@
 
 这个月吃麦当劳花了多少钱？巨无霸和麦麦脆汁鸡，哪款点得更多？记下每餐的食品、份数和实付，就能在日历里翻账单，在统计页看支出曲线和餐品排行。
 
-**[下载安卓版 1.8.1](https://github.com/Hyacince/mai-diary/raw/41456ad9fdacabf3ba12af37dc471c348fd76d8c/build/MaiDiary-1.8.1.apk)** · Android 8.0+ · 无需账号 · 账本保存在手机上
+**[下载安卓版 1.8.1](https://github.com/Hyacince/mai-diary/releases/download/v1.8.1/MaiDiary-1.8.1.apk)** · Android 8.0+ · 无需账号 · 账本保存在手机上
 
 | 用餐日历 | 食用份数排行 |
 | :---: | :---: |
