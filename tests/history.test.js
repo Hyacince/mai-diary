@@ -1,0 +1,22 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const www=path.resolve(__dirname,'../app/src/main/assets/www'),Ledger=require(path.join(www,'ledger.js'));
+const window={};vm.runInNewContext(fs.readFileSync(path.join(www,'ui.js'),'utf8'),{window});
+test('手账明细按日期倒序分组，每日小计完整，分页不拆分同一天',()=>{
+ const store={value:'',read(){return this.value;},write(value){this.value=value;return true;}};
+ const db=Ledger.open([{id:'a',name:'食品',kcal:100}],store);
+ const save=(date,amount)=>db.saveMeal({date,type:'午餐',amountCents:amount,items:[{productId:'a',quantity:1}]});
+ save('2026-11-12',1000);save('2026-11-12',2300);save('2026-11-11',0);save('2026-10-31',900);
+ const data=db.summary('month','2026-11-01');
+ const first=window.DiaryUI.mealHistory(data,1);
+ assert.equal((first.match(/class="history-day"/g)||[]).length,1);
+ assert.equal((first.match(/data-act="meal"/g)||[]).length,2);
+ assert.match(first,/¥33\.00/);assert.match(first,/data-act="history-more"/);
+ const all=window.DiaryUI.mealHistory(data,20);
+ assert.equal((all.match(/data-act="meal"/g)||[]).length,3);
+ assert(all.indexOf('2026-11-12')<all.indexOf('2026-11-11'));
+ assert.match(all,/¥0\.00/);assert.doesNotMatch(all,/2026-10-31|data-act="history-more"/);
+ db.deleteMeal(data.meals[0].id);
+ assert.equal((window.DiaryUI.mealHistory(db.summary('month','2026-11-01')).match(/data-act="meal"/g)||[]).length,2);
+ assert.match(window.DiaryUI.mealHistory(db.summary('month','2026-12-01')),/这个月还没有用餐记录/);
+});

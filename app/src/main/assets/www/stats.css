@@ -1,0 +1,65 @@
+.stats-total {position:relative; isolation:isolate; overflow:hidden}
+.stats-total:after {content:""; position:absolute; z-index:-1; width:125px; height:125px; top:-58px; right:-22px; border-radius:50%; border:1px solid #ffe59b; box-shadow:0 0 0 13px #ffce58,0 0 0 14px #ffe59b,0 0 0 28px #ffce58,0 0 0 29px #ffe59b}
+.stats-avg {font-size:12px; color:#61502d; margin-top:6px}
+.stats-chart-head {display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:11px; font-size:13px}
+.stats-chart-head small {font-size:12px}
+.stats-chart-head strong {font-size:16px}
+.stats-more {display:block; width:100%; padding:11px 9px; font-size:13px; color:var(--red); border-top:1px solid var(--line)}
+.chart-axis {font-variant-numeric:tabular-nums}
+.period-select {justify-content:center; margin:16px 0; gap:4px}
+.period-select .datejump {justify-content:center; flex:1; font-size:13px; min-height:44px}
+.trend-plot {display:block; width:100%; height:auto; overflow:visible; touch-action:pan-y}
+.trend-control {display:flex; align-items:center; gap:14px; font-size:11px; color:var(--muted); margin-top:14px}
+.trend-range {flex:1; min-width:0; height:32px; accent-color:var(--red)}
+.chart .note {font-size:11px; margin:5px 0 0}
+.period-overlay {position:fixed; inset:0; z-index:100; background:#23170b66; display:flex; align-items:flex-end; justify-content:center; padding-top:24px}
+.period-sheet {position:relative; isolation:isolate; width:100%; max-width:520px; max-height:100%; overflow-y:auto; background:#fffdf9; border-radius:26px 26px 0 0; padding:0 18px max(22px,env(safe-area-inset-bottom)); box-shadow:0 -8px 40px #38290a1a; overscroll-behavior:contain}
+.sheet-drag-zone {display:flex; width:100%; min-height:34px; align-items:center; justify-content:center; touch-action:none; cursor:grab; padding:0}
+.sheet-drag-zone:active {cursor:grabbing}
+.sheet-handle {width:38px; height:5px; border-radius:4px; background:#d4cfc6}
+.period-overlay[data-closing] .period-sheet {pointer-events:none}
+.calendar-highlight {position:absolute; z-index:-1; background:var(--calendar-yellow); pointer-events:none; transform-origin:0 0}
+.highlight-ready .calendar-week.selected,.highlight-ready .period-grid button.selected,.highlight-ready button.calendar-day.single-selected {background:transparent}
+button.calendar-day.single-selected {background:var(--calendar-yellow); color:var(--ink)}
+button.calendar-day.single-selected small {color:var(--muted)}
+.period-sheet h2 {font-size:22px; margin:0}
+.period-sheet .linkbtn {color:var(--red); padding:10px; min-height:44px}
+.period-chosen {font-size:14px; color:var(--muted); margin:4px 0 16px; min-height:22px; font-variant-numeric:tabular-nums}
+.period-heading {margin-bottom:14px}
+.period-heading strong {font-size:20px}
+.calendar-weekdays,.calendar-week {display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); width:100%}
+.calendar-weekdays {color:var(--muted); text-align:center; padding:6px 0 12px; font-size:12px}
+.calendar-days {border-top:1px solid var(--line); padding-top:8px}
+.calendar-week {margin:5px 0; padding:0; border-radius:30px}
+.calendar-day {height:48px; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; position:relative; font-size:16px; font-weight:650; padding:0; border-radius:0; font-variant-numeric:tabular-nums}
+.calendar-day>span {line-height:21px}
+.calendar-day small {font-size:10px; height:12px; line-height:12px; font-weight:400; color:var(--muted); white-space:nowrap}
+.calendar-day.outside {color:#b4ada3}
+.calendar-day.in-range {background:var(--calendar-yellow)}
+.calendar-week.selected {background:var(--calendar-yellow)}
+.calendar-week.selected .calendar-day {background:transparent; color:var(--ink)}
+.calendar-week.selected small {color:#6a501f}
+button.calendar-day.endpoint {border-radius:50%; background:var(--red); color:white}
+button.calendar-day.endpoint small {color:#fff3d9}
+.calendar-week>.calendar-day.in-range:not(.endpoint):first-child {border-radius:26px 0 0 26px}
+.calendar-week>.calendar-day.in-range:not(.endpoint):last-child {border-radius:0 26px 26px 0}
+.calendar-week>button.calendar-day.endpoint {border-radius:50%}
+.period-grid {display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px 6px; padding:12px 0}
+.period-grid button {position:relative; aspect-ratio:1; border-radius:50%; font-size:18px; font-weight:650; padding:0}
+.period-grid button.selected {background:var(--calendar-yellow)}
+.period-grid i {position:absolute; width:4px; height:4px; border-radius:50%; background:currentColor; bottom:14%; left:calc(50% - 2px)}
+.period-sheet .note {min-height:18px; font-size:12px; margin:14px 0}
+@media (max-width:350px) {.period-sheet {padding-left:12px; padding-right:12px}.calendar-day {height:44px}.period-grid button {font-size:16px}.period-select .datejump {font-size:11px}}
+
+.rank-categories {margin-bottom:12px}
+.period-sheet button.calendar-day.single-selected {color:var(--ink)}
+.period-sheet button.calendar-day.single-selected small {color:var(--muted)}
+.period-sheet {--calendar-yellow:#ffc72c; --calendar-circle-size:48px}
+/* Draw the connecting strip behind each endpoint, independently of its red circle. */
+.calendar-week>button.range-day.endpoint {background:transparent; border-radius:0; isolation:isolate}
+.range-day.endpoint::after {content:""; position:absolute; z-index:-1; pointer-events:none; left:50%; top:50%; transform:translate(-50%,-50%); width:min(100%,var(--calendar-circle-size)); aspect-ratio:1; border-radius:50%; background:var(--red)}
+.range-day.range-start::before,.range-day.range-end::before {content:""; position:absolute; z-index:-2; pointer-events:none; top:0; bottom:0; width:50%; background:var(--calendar-yellow)}
+.range-day.range-start::before {right:0}
+.range-day.range-end::before {left:0}
+.range-day.range-start:last-child::before,.range-day.range-end:first-child::before {content:none}
+@media (max-width:350px) {.period-sheet {--calendar-circle-size:44px}}
