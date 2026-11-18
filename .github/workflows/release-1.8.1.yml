@@ -14,12 +14,14 @@ jobs:
       GH_REPO: ${{ github.repository }}
       VERSION_COMMIT: 41456ad9fdacabf3ba12af37dc471c348fd76d8c
     steps:
-      - name: Verify and publish the signed APK
+      - name: Download signed APK from the version commit
+        run: curl --fail --location --retry 3 "https://raw.githubusercontent.com/$GH_REPO/$VERSION_COMMIT/build/MaiDiary-1.8.1.apk" -o MaiDiary-1.8.1.apk
+      - name: Verify SHA-256
+        run: echo "d65f900365e9879d0fd50e5ff6b2c8754e75f4d4b0903392de8460e42df42cb0  MaiDiary-1.8.1.apk" | sha256sum -c -
+      - name: Publish version and verified APK
         run: |
-          set -euo pipefail
-          apk=MaiDiary-1.8.1.apk
-          gh api -H "Accept: application/vnd.github.raw+json" "repos/$GH_REPO/contents/build/$apk?ref=$VERSION_COMMIT" > "$apk"
-          echo "d65f900365e9879d0fd50e5ff6b2c8754e75f4d4b0903392de8460e42df42cb0  $apk" | sha256sum -c -
-          if ! gh release view v1.8.1 >/dev/null 2>&1; then
-            gh release create v1.8.1 "$apk" --target "$VERSION_COMMIT" --title "麦记手账 1.8.1" --notes "自定义商品现在可以在详情页删除。已记录的餐次和统计保留。适用于 Android 8.0 及以上，可覆盖安装升级。"
+          if gh release view v1.8.1 --repo "$GH_REPO"; then
+            gh release upload v1.8.1 MaiDiary-1.8.1.apk --repo "$GH_REPO" --clobber
+          else
+            gh release create v1.8.1 MaiDiary-1.8.1.apk --repo "$GH_REPO" --target "$GITHUB_SHA" --title "麦记手账 1.8.1" --notes "支持在商品详情删除自定义商品，保留历史用餐记录。适用于 Android 8.0 及以上。"
           fi
