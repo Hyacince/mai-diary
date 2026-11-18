@@ -1,6 +1,16 @@
 # 麦记手账
 
-个人麦当劳用餐账本。把 `build/MaiDiary-1.8.1.apk` 传到 Android 8.0 或更高版本的手机，用系统安装器打开即可。已有用户直接覆盖安装，可保留账本。界面使用 Android System WebView，建议使用已更新的版本。
+这个月吃麦当劳花了多少钱？巨无霸和麦麦脆汁鸡，哪款点得更多？记下每餐的食品、份数和实付，就能在日历里翻账单，在统计页看支出曲线和餐品排行。
+
+**[下载安卓版 1.8.1](https://github.com/Hyacince/mai-diary/raw/41456ad9fdacabf3ba12af37dc471c348fd76d8c/build/MaiDiary-1.8.1.apk)** · Android 8.0+ · 无需账号 · 账本保存在手机上
+
+| 用餐日历 | 食用份数排行 |
+| :---: | :---: |
+| <img src="docs/media/diary.webp" width="280" alt="手账日历和当月实付"> | <img src="docs/media/ranking.webp" width="280" alt="按份数排序的餐品"> |
+
+示例账本：两份麦乐鸡，一餐实付 19.90 元。[看 12 秒记餐演示](docs/media/demo.gif)
+
+**你所在的城市，有哪款餐品还记不了？** [告诉我餐品名](https://github.com/Hyacince/mai-diary/issues/new?template=missing-food.yml)，城市和规格选填。
 
 ## 记餐与统计
 

@@ -1,0 +1,16 @@
+name: 缺少餐品
+description: 告诉我们哪款餐品还记不了
+title: "[缺少餐品] "
+body:
+  - type: input
+    id: food
+    attributes:
+      label: 餐品名称
+      placeholder: 例如 海陆双全堡
+    validations:
+      required: true
+  - type: input
+    id: details
+    attributes:
+      label: 城市或规格（选填）
+      placeholder: 例如 上海，中份
