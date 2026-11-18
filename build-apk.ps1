@@ -46,8 +46,8 @@ $resources = Join-Path $work 'resources.zip'
 $unsigned = Join-Path $work 'unsigned.apk'
 Invoke-BuildStep $aapt @('compile', '--dir', (Join-Path $src 'res'), '-o', $resources)
 Invoke-BuildStep $aapt @('link', '-o', $unsigned, '-I', $androidJar, '--manifest', $manifestPath,
-    '--min-sdk-version', '26', '--target-sdk-version', '35', '--version-code', '11',
-    '--version-name', '1.8.1', '--java', $generated, $resources)
+    '--min-sdk-version', '26', '--target-sdk-version', '35', '--version-code', '13',
+    '--version-name', '1.8.3', '--java', $generated, $resources)
 
 $sources = @(Get-ChildItem -LiteralPath (Join-Path $src 'java') -Recurse -Filter '*.java' -File |
     ForEach-Object { $_.FullName })
@@ -89,6 +89,6 @@ $candidate = Join-Path $work 'signed.apk'
 Invoke-BuildStep $java @('-jar', $signer, 'sign', '--ks', $keystore, '--ks-key-alias', 'maidiary',
     '--ks-pass', 'pass:android', '--v4-signing-enabled', 'false', '--out', $candidate, $aligned)
 Invoke-BuildStep $java @('-jar', $signer, 'verify', '--verbose', $candidate)
-$apk = Join-Path $output 'MaiDiary-1.8.1.apk'
+$apk = Join-Path $output 'MaiDiary-1.8.3.apk'
 Copy-Item -LiteralPath $candidate -Destination $apk -Force
 Get-Item -LiteralPath $apk | Select-Object FullName, Length

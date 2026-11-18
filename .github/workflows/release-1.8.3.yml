@@ -1,0 +1,26 @@
+name: Publish signed APK 1.8.3
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/release-1.8.3.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Download signed APK from the version commit
+        run: curl --fail --location --retry 3 "https://raw.githubusercontent.com/$GH_REPO/$GITHUB_SHA/build/MaiDiary-1.8.3.apk" -o MaiDiary-1.8.3.apk
+      - name: Verify SHA-256
+        run: echo "8fbc2e03b77ca426be25a3b6804c07dd5851cd1d571c015eaea3cbf425bdc2b0  MaiDiary-1.8.3.apk" | sha256sum -c -
+      - name: Publish version and verified APK
+        run: |
+          if gh release view v1.8.3 --repo "$GH_REPO"; then
+            gh release upload v1.8.3 MaiDiary-1.8.3.apk --repo "$GH_REPO" --clobber
+          else
+            gh release create v1.8.3 MaiDiary-1.8.3.apk --repo "$GH_REPO" --target "$GITHUB_SHA" --title "麦记手账 1.8.3" --notes "内置菜单新增 HOLD不住鸡排堡、酥酥多笋卷、小杯苹果汁、两款咖啡和三种麦炫酷。未公开热量的单品按同类估算。适用于 Android 8.0 及以上。"
+          fi
